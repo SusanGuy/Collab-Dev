@@ -3,6 +3,8 @@ const router = new express.Router();
 const Profile = require("../../modal/Profile");
 const User = require("../../modal/User");
 const auth = require("../../middleware/auth");
+const axios = require("axios");
+const config = require("config");
 const { check, validationResult } = require("express-validator");
 
 router.get("/me", auth, async (req, res) => {
@@ -145,6 +147,198 @@ router.delete("/", auth, async (req, res) => {
     res.json({
       msg: "User Removed"
     });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.put(
+  "/experience",
+  [
+    auth,
+    [
+      check("title", "Title is required")
+        .not()
+        .isEmpty(),
+      check("company", "Company is required")
+        .not()
+        .isEmpty(),
+      check("from", "From date is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array()
+      });
+    }
+
+    const {
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description
+    } = req.body;
+    const newExp = {
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description
+    };
+    if (newExp.to === undefined) {
+      newExp.current = true;
+    }
+    try {
+      const profile = await Profile.findOne({
+        user: req.user.id
+      });
+
+      profile.experiences.unshift(newExp);
+      await profile.save();
+      res.send({
+        profile
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
+router.delete("/experience/:id", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.user.id
+    });
+    if (profile.experiences.length === 0) {
+      return res.status(400).send({
+        msg: "No experience found"
+      });
+    }
+    const newProfileExperience = profile.experiences.filter(experience => {
+      return experience.id !== req.params.id;
+    });
+    profile.experiences = newProfileExperience;
+    await profile.save();
+
+    res.json({
+      msg: "Experience Removed"
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.put(
+  "/education",
+  [
+    auth,
+    [
+      check("school", "School is required")
+        .not()
+        .isEmpty(),
+      check("degree", "Degree is required")
+        .not()
+        .isEmpty(),
+      check("major", "Major is required")
+        .not()
+        .isEmpty(),
+      check("from", "From date is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array()
+      });
+    }
+
+    const { school, degree, major, from, to, current, description } = req.body;
+
+    const newExp = {
+      school,
+      degree,
+      major,
+      from,
+      to,
+      current,
+      description
+    };
+
+    if (newExp.to === undefined) {
+      newExp.current = true;
+    }
+    try {
+      const profile = await Profile.findOne({
+        user: req.user.id
+      });
+
+      profile.education.unshift(newExp);
+      await profile.save();
+      res.send({
+        profile
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
+router.delete("/education/:id", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.user.id
+    });
+    if (profile.education.length === 0) {
+      return res.status(400).send({
+        msg: "No education found"
+      });
+    }
+    const newProfileEducation = profile.education.filter(ed => {
+      return ed.id !== req.params.id;
+    });
+    profile.education = newProfileEducation;
+    await profile.save();
+
+    res.json({
+      msg: "Education Removed"
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/github/:username", auth, async (req, res) => {
+  try {
+    const repos = await axios.get(
+      `https://api.github.com/users/${
+        req.params.username
+      }/repos?per_page=5&sort=created:asc&client_id=${config.get(
+        "clientID"
+      )}&client_secret=${config.get("clientSecret")}`
+    );
+    if (!repos) {
+      return res.status(404).send({
+        msg: "Profile Not Found"
+      });
+    }
+    res.send(repos.data);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Server Error");
