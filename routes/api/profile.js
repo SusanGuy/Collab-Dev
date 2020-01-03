@@ -333,9 +333,10 @@ router.get("/github/:username", auth, async (req, res) => {
         "clientID"
       )}&client_secret=${config.get("clientSecret")}`
     );
-    if (!repos) {
+
+    if (repos.data.length === 0) {
       return res.status(404).send({
-        msg: "Profile Not Found"
+        msg: "Github Acc Not Found"
       });
     }
     res.send(repos.data);
