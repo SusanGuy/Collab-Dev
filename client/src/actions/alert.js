@@ -12,5 +12,11 @@ export const setAlert = (msg, alertType) => {
         id
       }
     });
+    setTimeout(() => {
+      dispatch({
+        type: actionTypes.REMOVE_ALERT,
+        payload: id
+      });
+    }, 3000);
   };
 };
