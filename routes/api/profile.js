@@ -72,7 +72,7 @@ router.post(
         return skill.trim();
       });
     }
-    profileFields.social = {};
+    profileFields.socials = {};
     if (youtube) profileFields.socials.youtube = youtube;
     if (twitter) profileFields.socials.twitter = twitter;
     if (facebook) profileFields.socials.facebook = facebook;

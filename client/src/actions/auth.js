@@ -93,5 +93,8 @@ export const logout = () => {
     dispatch({
       type: actionTypes.LOGOUT
     });
+    dispatch({
+      type: actionTypes.ClEAR_PROFILE
+    });
   };
 };
