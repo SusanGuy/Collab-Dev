@@ -3,6 +3,8 @@ const initialState = {
   profile: null,
   profiles: [],
   repos: [],
+  education: [],
+  experiences: [],
   loading: true,
   error: {}
 };
@@ -12,6 +14,7 @@ export default function(state = initialState, action) {
 
   switch (type) {
     case actionTypes.GET_PROFILE:
+    case actionTypes.UPDATE_PROFILE:
       return {
         ...state,
         profile: payload,
@@ -30,6 +33,7 @@ export default function(state = initialState, action) {
         repose: [],
         loading: false
       };
+
     default:
       return state;
   }
