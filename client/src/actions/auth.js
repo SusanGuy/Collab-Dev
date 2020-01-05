@@ -14,9 +14,7 @@ export const loadUser = () => {
 
       dispatch({
         type: actionTypes.USER_LOADED,
-        payload: {
-          user: res.data
-        }
+        payload: res.data
       });
     } catch (err) {
       dispatch({
@@ -38,9 +36,7 @@ export const register = ({ name, email, password }) => {
       const res = await axios.post("/users", body, config);
       dispatch({
         type: actionTypes.REGISTER_SUCCESS,
-        payload: {
-          token: res.data.token
-        }
+        payload: res.data
       });
       dispatch(loadUser());
     } catch (err) {

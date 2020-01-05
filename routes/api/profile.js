@@ -96,9 +96,12 @@ router.post(
             new: true
           }
         );
+
         return res.json(profile);
       }
+
       profile = new Profile(profileFields);
+
       await profile.save();
       res.json(profile);
     } catch (err) {
@@ -145,7 +148,7 @@ router.delete("/", auth, async (req, res) => {
       _id: req.user.id
     });
 
-    res.json({
+    res.send({
       msg: "User Removed"
     });
   } catch (error) {
@@ -196,9 +199,7 @@ router.put(
       current,
       description
     };
-    if (newExp.to === undefined) {
-      newExp.current = true;
-    }
+
     try {
       const profile = await Profile.findOne({
         user: req.user.id
@@ -206,9 +207,7 @@ router.put(
 
       profile.experiences.unshift(newExp);
       await profile.save();
-      res.send({
-        profile
-      });
+      res.send(profile);
     } catch (error) {
       console.log(error.message);
       res.status(500).send("Server Error");
@@ -232,9 +231,7 @@ router.delete("/experience/:id", auth, async (req, res) => {
     profile.experiences = newProfileExperience;
     await profile.save();
 
-    res.json({
-      msg: "Experience Removed"
-    });
+    res.send(profile);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Server Error");
@@ -280,9 +277,6 @@ router.put(
       description
     };
 
-    if (newExp.to === undefined) {
-      newExp.current = true;
-    }
     try {
       const profile = await Profile.findOne({
         user: req.user.id
@@ -290,9 +284,7 @@ router.put(
 
       profile.education.unshift(newExp);
       await profile.save();
-      res.send({
-        profile
-      });
+      res.send(profile);
     } catch (error) {
       console.log(error.message);
       res.status(500).send("Server Error");
@@ -316,9 +308,7 @@ router.delete("/education/:id", auth, async (req, res) => {
     profile.education = newProfileEducation;
     await profile.save();
 
-    res.json({
-      msg: "Education Removed"
-    });
+    res.send(profile);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Server Error");

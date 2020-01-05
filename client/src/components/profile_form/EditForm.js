@@ -27,26 +27,41 @@ const EditProfile = ({
 
   useEffect(() => {
     getProfile();
-    setFormData({
-      company: loading || !profile.company ? "" : profile.company,
-      website: loading || !profile.website ? "" : profile.website,
-      location: loading || !profile.location ? "" : profile.location,
-      status: loading || !profile.status ? "" : profile.status,
-      skills: loading || !profile.skills ? "" : profile.skills.join(","),
-      githubusername:
-        loading || !profile.githubusername ? "" : profile.githubusername,
-      bio: loading || !profile.bio ? "" : profile.bio,
-      twitter:
-        loading || !profile.socials.twitter ? "" : profile.socials.twitter,
-      facebook:
-        loading || !profile.socials.facebook ? "" : profile.socials.facebook,
-      linkedin:
-        loading || !profile.socials.linkedin ? "" : profile.socials.linkedin,
-      youtube:
-        loading || !profile.socials.youtube ? "" : profile.socials.youtube,
-      instagram:
-        loading || !profile.socials.instagram ? "" : profile.socials.instagram
-    });
+
+    if (profile.socials !== undefined) {
+      setFormData({
+        company: loading || !profile.company ? "" : profile.company,
+        website: loading || !profile.website ? "" : profile.website,
+        location: loading || !profile.location ? "" : profile.location,
+        status: loading || !profile.status ? "" : profile.status,
+        skills: loading || !profile.skills ? "" : profile.skills.join(","),
+        githubusername:
+          loading || !profile.githubusername ? "" : profile.githubusername,
+        bio: loading || !profile.bio ? "" : profile.bio,
+        twitter:
+          loading || !profile.socials.twitter ? "" : profile.socials.twitter,
+        facebook:
+          loading || !profile.socials.facebook ? "" : profile.socials.facebook,
+        linkedin:
+          loading || !profile.socials.linkedin ? "" : profile.socials.linkedin,
+        youtube:
+          loading || !profile.socials.youtube ? "" : profile.socials.youtube,
+        instagram:
+          loading || !profile.socials.instagram ? "" : profile.socials.instagram
+      });
+    } else {
+      setFormData({
+        ...formData,
+        company: loading || !profile.company ? "" : profile.company,
+        website: loading || !profile.website ? "" : profile.website,
+        location: loading || !profile.location ? "" : profile.location,
+        status: loading || !profile.status ? "" : profile.status,
+        skills: loading || !profile.skills ? "" : profile.skills.join(","),
+        githubusername:
+          loading || !profile.githubusername ? "" : profile.githubusername,
+        bio: loading || !profile.bio ? "" : profile.bio
+      });
+    }
   }, [loading]);
 
   const {

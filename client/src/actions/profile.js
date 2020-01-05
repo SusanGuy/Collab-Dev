@@ -1,9 +1,13 @@
 import axios from "axios";
 import { setAlert } from "./alert";
+import { logout } from "./auth";
 import * as actionTypes from "./actionTypes";
 
 export const getProfile = () => {
   return async dispatch => {
+    dispatch({
+      type: actionTypes.SET_LOADING
+    });
     try {
       const res = await axios.get("/profile/me");
 
@@ -68,6 +72,7 @@ export const addExperience = (formData, history) => {
         }
       };
       const res = await axios.put("/profile/experience", formData, config);
+
       dispatch({
         type: actionTypes.UPDATE_PROFILE,
         payload: res.data
@@ -120,6 +125,78 @@ export const addEducation = (formData, history) => {
         type: actionTypes.PROFILE_ERROR,
         payload: {
           msg: err.response.data.msg,
+          status: err.response.status
+        }
+      });
+    }
+  };
+};
+
+export const deleteExperience = id => {
+  return async dispatch => {
+    try {
+      const res = await axios.delete(`/profile/experience/${id}`);
+      dispatch({
+        type: actionTypes.UPDATE_PROFILE,
+        payload: res.data
+      });
+      dispatch(setAlert("Experience Deleted", "success"));
+    } catch (err) {
+      const errors = err.response.data.errors;
+      if (errors) {
+        errors.forEach(error => {
+          return dispatch(setAlert(error.msg, "danger"));
+        });
+      }
+      dispatch({
+        type: actionTypes.PROFILE_ERROR,
+        payload: {
+          msg: err.response.data.msg,
+          status: err.response.status
+        }
+      });
+    }
+  };
+};
+
+export const deleteEducation = id => {
+  return async dispatch => {
+    try {
+      const res = await axios.delete(`/profile/education/${id}`);
+      dispatch({
+        type: actionTypes.UPDATE_PROFILE,
+        payload: res.data
+      });
+      dispatch(setAlert("Education Deleted", "success"));
+    } catch (err) {
+      const errors = err.response.data.errors;
+      if (errors) {
+        errors.forEach(error => {
+          return dispatch(setAlert(error.msg, "danger"));
+        });
+      }
+      dispatch({
+        type: actionTypes.PROFILE_ERROR,
+        payload: {
+          msg: err.response.data.msg,
+          status: err.response.status
+        }
+      });
+    }
+  };
+};
+
+export const deleteProfile = () => {
+  return async dispatch => {
+    try {
+      await axios.delete("/profile/");
+      dispatch(logout());
+      dispatch(setAlert("Profile Deleted", "success"));
+    } catch (err) {
+      dispatch({
+        type: actionTypes.PROFILE_ERROR,
+        payload: {
+          msg: err.response.data,
           status: err.response.status
         }
       });
