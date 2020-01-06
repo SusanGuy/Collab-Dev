@@ -18,9 +18,10 @@ const Dashboard = ({
     getProfile();
   }, [getProfile]);
 
-  if (loading || profile === null) {
+  if (loading && profile === null) {
     return <Spinner />;
   }
+
   let profileLoad = (
     <Fragment>
       <p>You have not yet setup a profile, please add some info</p>

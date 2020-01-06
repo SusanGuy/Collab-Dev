@@ -16,6 +16,35 @@ export default function(state = initialState, action) {
         posts: payload,
         loading: false
       };
+
+    case actionTypes.UPDATE_LIKES:
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post._id === payload.id
+            ? {
+                ...post,
+                likes: payload.likes
+              }
+            : post
+        ),
+        loading: false
+      };
+
+    case actionTypes.DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(post => post._id !== payload),
+        loading: false
+      };
+
+    case actionTypes.ADD_POST:
+      return {
+        ...state,
+        posts: [...state.posts, payload],
+        loading: false
+      };
+
     case actionTypes.POST_ERROR:
       return {
         ...state,
