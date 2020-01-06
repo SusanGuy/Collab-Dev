@@ -16,7 +16,7 @@ const Dashboard = ({
 }) => {
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [getProfile]);
 
   if (loading && profile === null) {
     return <Spinner />;

@@ -23,6 +23,12 @@ export default function(state = initialState, action) {
         profile: payload,
         loading: false
       };
+    case actionTypes.GET_GITHUB_PROFILE:
+      return {
+        ...state,
+        repos: payload,
+        loading: false
+      };
     case actionTypes.PROFILE_ERROR:
       return {
         ...state,
@@ -30,6 +36,14 @@ export default function(state = initialState, action) {
         loading: false,
         profile: null
       };
+
+    case actionTypes.GET_ALL_PROFILES:
+      return {
+        ...state,
+        profiles: payload,
+        loading: false
+      };
+
     case actionTypes.ClEAR_PROFILE:
       return {
         ...state,

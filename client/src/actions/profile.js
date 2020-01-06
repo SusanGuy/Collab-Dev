@@ -203,3 +203,66 @@ export const deleteProfile = () => {
     }
   };
 };
+
+export const getAllProfiles = () => {
+  return async dispatch => {
+    dispatch({
+      type: actionTypes.ClEAR_PROFILE
+    });
+    try {
+      const res = await axios.get("/profile/");
+      dispatch({
+        type: actionTypes.GET_ALL_PROFILES,
+        payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.PROFILE_ERROR,
+        payload: {
+          msg: error.response.data,
+          status: error.response.status
+        }
+      });
+    }
+  };
+};
+
+export const getUserProfile = id => {
+  return async dispatch => {
+    try {
+      const res = await axios.get(`/profile/user/${id}`);
+      dispatch({
+        type: actionTypes.GET_PROFILE,
+        payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.PROFILE_ERROR,
+        payload: {
+          msg: error.response.data,
+          status: error.response.status
+        }
+      });
+    }
+  };
+};
+
+export const getRepos = username => {
+  return async dispatch => {
+    try {
+      const res = await axios.get(`/profile/github/${username}`);
+      dispatch({
+        type: actionTypes.GET_GITHUB_PROFILE,
+        payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.PROFILE_ERROR,
+        payload: {
+          msg: error.response.data,
+          status: error.response.status
+        }
+      });
+    }
+  };
+};

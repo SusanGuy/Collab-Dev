@@ -26,8 +26,6 @@ const EditProfile = ({
   });
 
   useEffect(() => {
-    getProfile();
-
     if (profile.socials !== undefined) {
       setFormData({
         company: loading || !profile.company ? "" : profile.company,
