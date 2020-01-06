@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const ProfileItem = ({ profile }) => {
-  console.log(profile.user.avatar.split("//").join(""));
   return (
     <Fragment>
       <div className="profile bg-light">

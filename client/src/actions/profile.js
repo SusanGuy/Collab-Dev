@@ -1,13 +1,11 @@
 import axios from "axios";
 import { setAlert } from "./alert";
 import { logout } from "./auth";
+
 import * as actionTypes from "./actionTypes";
 
 export const getProfile = () => {
   return async dispatch => {
-    dispatch({
-      type: actionTypes.SET_LOADING
-    });
     try {
       const res = await axios.get("/profile/me");
 
@@ -35,6 +33,7 @@ export const createProfile = (formData, history, edit = false) => {
           "Content-Type": "application/json"
         }
       };
+
       const res = await axios.post("/profile", formData, config);
       dispatch({
         type: actionTypes.GET_PROFILE,

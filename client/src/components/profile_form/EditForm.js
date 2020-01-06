@@ -3,6 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getProfile, createProfile } from "../../actions/profile";
+import Spinner from "../layout/Spinner";
 
 const EditProfile = ({
   profile: { profile, loading },
@@ -26,41 +27,24 @@ const EditProfile = ({
   });
 
   useEffect(() => {
-    if (profile.socials !== undefined) {
-      setFormData({
-        company: loading || !profile.company ? "" : profile.company,
-        website: loading || !profile.website ? "" : profile.website,
-        location: loading || !profile.location ? "" : profile.location,
-        status: loading || !profile.status ? "" : profile.status,
-        skills: loading || !profile.skills ? "" : profile.skills.join(","),
-        githubusername:
-          loading || !profile.githubusername ? "" : profile.githubusername,
-        bio: loading || !profile.bio ? "" : profile.bio,
-        twitter:
-          loading || !profile.socials.twitter ? "" : profile.socials.twitter,
-        facebook:
-          loading || !profile.socials.facebook ? "" : profile.socials.facebook,
-        linkedin:
-          loading || !profile.socials.linkedin ? "" : profile.socials.linkedin,
-        youtube:
-          loading || !profile.socials.youtube ? "" : profile.socials.youtube,
-        instagram:
-          loading || !profile.socials.instagram ? "" : profile.socials.instagram
-      });
-    } else {
-      setFormData({
-        ...formData,
-        company: loading || !profile.company ? "" : profile.company,
-        website: loading || !profile.website ? "" : profile.website,
-        location: loading || !profile.location ? "" : profile.location,
-        status: loading || !profile.status ? "" : profile.status,
-        skills: loading || !profile.skills ? "" : profile.skills.join(","),
-        githubusername:
-          loading || !profile.githubusername ? "" : profile.githubusername,
-        bio: loading || !profile.bio ? "" : profile.bio
-      });
-    }
-  }, [loading]);
+    getProfile();
+
+    setFormData({
+      company: loading || !profile.company ? "" : profile.company,
+      website: loading || !profile.website ? "" : profile.website,
+      location: loading || !profile.location ? "" : profile.location,
+      status: loading || !profile.status ? "" : profile.status,
+      skills: loading || !profile.skills ? "" : profile.skills.join(","),
+      githubusername:
+        loading || !profile.githubusername ? "" : profile.githubusername,
+      bio: loading || !profile.bio ? "" : profile.bio,
+      twitter: loading || !profile.socials ? "" : profile.socials.twitter,
+      facebook: loading || !profile.socials ? "" : profile.socials.facebook,
+      linkedin: loading || !profile.socials ? "" : profile.socials.linkedin,
+      youtube: loading || !profile.socials ? "" : profile.socials.youtube,
+      instagram: loading || !profile.socials ? "" : profile.socials.instagram
+    });
+  }, [loading, getProfile]);
 
   const {
     company,
@@ -90,6 +74,10 @@ const EditProfile = ({
     e.preventDefault();
     createProfile(formData, history, true);
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <Fragment>

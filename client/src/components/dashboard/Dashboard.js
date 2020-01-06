@@ -18,7 +18,7 @@ const Dashboard = ({
     getProfile();
   }, [getProfile]);
 
-  if (loading && profile === null) {
+  if (loading || profile === null) {
     return <Spinner />;
   }
   let profileLoad = (

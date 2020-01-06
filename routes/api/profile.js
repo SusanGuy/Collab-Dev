@@ -46,6 +46,7 @@ router.post(
         errors: errors.array()
       });
     }
+
     const {
       company,
       website,
@@ -60,6 +61,7 @@ router.post(
       instagram,
       linkedin
     } = req.body;
+
     const profileFields = {};
     profileFields.user = req.user.id;
     if (company) profileFields.company = company;
@@ -315,7 +317,7 @@ router.delete("/education/:id", auth, async (req, res) => {
   }
 });
 
-router.get("/github/:username", auth, async (req, res) => {
+router.get("/github/:username", async (req, res) => {
   try {
     const repos = await axios.get(
       `https://api.github.com/users/${
@@ -332,7 +334,6 @@ router.get("/github/:username", auth, async (req, res) => {
     }
     res.send(repos.data);
   } catch (error) {
-    console.log(error.message);
     res.status(500).send("Server Error");
   }
 });
