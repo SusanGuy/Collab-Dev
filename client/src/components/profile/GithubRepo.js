@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const GithubRepo = ({ repo }) => {
-  console.log(repo.stars);
   return (
     <div className="repo bg-white p-1 my-1">
       <div>

@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile } from "../../actions/profile";
 
-const CreateProfile = ({ createProfile, history }) => {
+const CreateProfile = ({ createProfile, history, profile: { profile } }) => {
   const [formData, setFormData] = useState({
     company: "",
     website: "",
@@ -48,6 +48,11 @@ const CreateProfile = ({ createProfile, history }) => {
     e.preventDefault();
     createProfile(formData, history);
   };
+
+  if (profile !== null) {
+    console.log("mama");
+    return <Redirect to="/edit-profile" />;
+  }
 
   return (
     <Fragment>
@@ -225,7 +230,16 @@ const CreateProfile = ({ createProfile, history }) => {
 };
 
 CreateProfile.propTypes = {
-  createProfile: PropTypes.func.isRequired
+  createProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
-export default connect(null, { createProfile })(withRouter(CreateProfile));
+const mapStateToProps = state => {
+  return {
+    profile: state.profile
+  };
+};
+
+export default connect(mapStateToProps, { createProfile })(
+  withRouter(CreateProfile)
+);

@@ -16,6 +16,12 @@ export default function(state = initialState, action) {
         posts: payload,
         loading: false
       };
+    case actionTypes.GET_POST:
+      return {
+        ...state,
+        post: payload,
+        loading: false
+      };
 
     case actionTypes.UPDATE_LIKES:
       return {
@@ -41,7 +47,25 @@ export default function(state = initialState, action) {
     case actionTypes.ADD_POST:
       return {
         ...state,
-        posts: [...state.posts, payload],
+        posts: [payload, ...state.posts],
+        loading: false
+      };
+
+    case actionTypes.ADD_COMMENT:
+      return {
+        ...state,
+        post: { ...state.post, comments: payload },
+        loading: false
+      };
+    case actionTypes.REMOVE_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: state.post.comments.filter(
+            comment => comment._id !== payload
+          )
+        },
         loading: false
       };
 

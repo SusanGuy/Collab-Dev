@@ -20,8 +20,15 @@ const Profile = ({
     getUserProfile(match.params.id);
   }, [getUserProfile]);
 
-  if (loading || profile === null) {
+  if (loading && profile === null) {
     return <Spinner />;
+  }
+  if (!loading && profile === null) {
+    return (
+      <Fragment>
+        <p>No Profile added yet...</p>
+      </Fragment>
+    );
   }
   return (
     <Fragment>
