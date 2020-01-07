@@ -18,31 +18,23 @@ const Dashboard = ({
     getProfile();
   }, [getProfile]);
 
-  if (loading) {
-    return <Spinner />;
-  }
-
-  let profileLoad = (
-    <Fragment>
-      <p>You have not yet setup a profile, please add some info</p>
-      <Link to="/create-profile" className="btn btn-primary my-1">
-        Create Profile
-      </Link>
-    </Fragment>
-  );
-  if (profile !== null) {
-    profileLoad = (
-      <Fragment>
-        <DashboardActions />
-        <Experience experience={profile.experiences} />
-        <Education education={profile.education} />
-        <div className="my-2">
-          <button className="btn btn-danger" onClick={() => deleteProfile()}>
-            <i className="fas fa-user-minus" /> Delete My Account
-          </button>
-        </div>
-      </Fragment>
-    );
+  if (profile === null) {
+    if (error && !loading) {
+      return (
+        <Fragment>
+          <h1 className="large text-primary">Dashboard</h1>
+          <p className="lead">
+            <i className="fas fa-user"></i> Welcome {user && user.name}
+          </p>
+          <p>You have not yet setup a profile, please add some info</p>
+          <Link to="/create-profile" className="btn btn-primary my-1">
+            Create Profile
+          </Link>
+        </Fragment>
+      );
+    } else {
+      return <Spinner />;
+    }
   }
 
   return (
@@ -51,7 +43,14 @@ const Dashboard = ({
       <p className="lead">
         <i className="fas fa-user"></i> Welcome {user && user.name}
       </p>
-      {profileLoad}
+      <DashboardActions />
+      <Experience experience={profile.experiences} />
+      <Education education={profile.education} />
+      <div className="my-2">
+        <button className="btn btn-danger" onClick={() => deleteProfile()}>
+          <i className="fas fa-user-minus" /> Delete My Account
+        </button>
+      </div>
     </Fragment>
   );
 };

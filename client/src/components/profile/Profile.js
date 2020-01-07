@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import Spinner from "../layout/Spinner";
 import { connect } from "react-redux";
@@ -13,18 +13,28 @@ import { getUserProfile } from "../../actions/profile";
 const Profile = ({
   match,
   getUserProfile,
-  profile: { profile, loading },
-  auth
+  profile: { profile, error, loading },
+  auth,
+  location
 }) => {
   useEffect(() => {
     getUserProfile(match.params.id);
   }, [getUserProfile]);
 
   if (profile === null) {
-    if (loading) {
-      return <Spinner />;
+    if (error) {
+      return (
+        <Fragment>
+          <p>No profile added yet ...</p>
+          {loading === false && auth.user._id === location.id && (
+            <Link to="/create-profile" className="btn btn-dark">
+              Add Profile
+            </Link>
+          )}
+        </Fragment>
+      );
     } else {
-      return <p>No Profile Found...</p>;
+      return <Spinner />;
     }
   }
 
@@ -40,6 +50,7 @@ const Profile = ({
             Edit Profile
           </Link>
         )}
+
       <div className="profile-grid my-1">
         <ProfileTop profile={profile} />
         <ProfileAbout profile={profile} />

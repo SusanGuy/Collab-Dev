@@ -16,7 +16,12 @@ const PostItem = ({
   return (
     <div className="post bg-white p-1 my-1">
       <div>
-        <Link to={`/profile/${post.user}`}>
+        <Link
+          to={{
+            pathname: `/profile/${post.user}`,
+            id: post.user
+          }}
+        >
           <img className="round-img" src={post.avatar} alt="" />
           <h4>{post.name}</h4>
         </Link>

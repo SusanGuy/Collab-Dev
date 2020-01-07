@@ -20,7 +20,7 @@ const ProfileGithub = ({ username, getRepos, repos, loading }) => {
       <h2 className="text-primary my-1">
         <i className="fab fa-github"></i> Github Repos
         {repos.length === 0 ? (
-          <h1
+          <p
             style={{
               fontSize: "14px",
               fontDecoration: "none",
@@ -28,7 +28,7 @@ const ProfileGithub = ({ username, getRepos, repos, loading }) => {
             }}
           >
             No repos found..
-          </h1>
+          </p>
         ) : (
           repos.map(repo => {
             return <GithubRep key={repo.id} repo={repo} />;
