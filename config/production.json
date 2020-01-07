@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://yayornay:YayorNay@cluster0-wdvph.mongodb.net/devPortalProd?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "clientID": "a5755cb39c592fc8f96b",
+  "clientSecret": "5b226579c1e5fc489056398c16c2db4bcb29ee01"
+}
