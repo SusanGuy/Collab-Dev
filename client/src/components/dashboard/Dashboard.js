@@ -12,13 +12,13 @@ const Dashboard = ({
   getProfile,
   deleteProfile,
   auth: { user },
-  profile: { profile, loading }
+  profile: { profile, error, loading }
 }) => {
   useEffect(() => {
     getProfile();
   }, [getProfile]);
 
-  if (loading && profile === null) {
+  if (loading) {
     return <Spinner />;
   }
 

@@ -2,9 +2,10 @@ import React, { Fragment, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
+import Spinner from "../layout/Spinner";
 import PropTypes from "prop-types";
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, loading }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -22,6 +23,10 @@ const Login = ({ login, isAuthenticated }) => {
     e.preventDefault();
     login(email, password);
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
@@ -65,12 +70,14 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.loading
   };
 };
 

@@ -11,23 +11,25 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case actionTypes.SET_LOADING:
-      return {
-        ...state,
-        loading: true
-      };
     case actionTypes.GET_PROFILE:
     case actionTypes.UPDATE_PROFILE:
       return {
         ...state,
         profile: payload,
-        loading: false
+        loading: false,
+        error: null
       };
     case actionTypes.GET_GITHUB_PROFILE:
       return {
         ...state,
         repos: payload,
         loading: false
+      };
+    case actionTypes.GITHUB_PROFILE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload
       };
     case actionTypes.PROFILE_ERROR:
       return {
@@ -49,7 +51,14 @@ export default function(state = initialState, action) {
         ...state,
         profile: null,
         repos: [],
-        loading: false
+        loading: false,
+        error: null
+      };
+
+    case actionTypes.SET_LOADING:
+      return {
+        ...state,
+        loading: true
       };
 
     default:

@@ -4,8 +4,9 @@ import { Link, Redirect } from "react-router-dom";
 import { setAlert } from "../../actions/alert";
 import { register } from "../../actions/auth";
 import PropTypes from "prop-types";
+import Spinner from "../layout/Spinner";
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ setAlert, register, isAuthenticated, loading }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,6 +30,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       register({ name, email, password });
     }
   };
+  if (loading) {
+    return <Spinner />;
+  }
 
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
@@ -98,11 +102,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.loading
   };
 };
 

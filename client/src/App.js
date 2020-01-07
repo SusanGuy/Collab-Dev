@@ -20,6 +20,7 @@ import AddEducation from "./components/profile_form/AddEducation";
 import Profiles from "./components/Profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import Post from "./components/post/Post";
+import NotFound from "./components/layout/NotFound";
 import "./App.css";
 
 if (localStorage.token) {
@@ -67,6 +68,7 @@ const App = () => {
               />
               <PrivateRoute exact path="/posts" component={Posts} />
               <PrivateRoute exact path="/post/:id" component={Post} />
+              <Route component={NotFound} />
             </Switch>
           </section>
         </Fragment>

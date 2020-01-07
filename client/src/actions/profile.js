@@ -249,6 +249,9 @@ export const getUserProfile = id => {
 export const getRepos = username => {
   return async dispatch => {
     try {
+      dispatch({
+        type: actionTypes.SET_LOADING
+      });
       const res = await axios.get(`/profile/github/${username}`);
       dispatch({
         type: actionTypes.GET_GITHUB_PROFILE,
@@ -256,7 +259,7 @@ export const getRepos = username => {
       });
     } catch (error) {
       dispatch({
-        type: actionTypes.PROFILE_ERROR,
+        type: actionTypes.GITHUB_PROFILE_ERROR,
         payload: {
           msg: error.response.data,
           status: error.response.status

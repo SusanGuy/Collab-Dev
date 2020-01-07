@@ -20,16 +20,14 @@ const Profile = ({
     getUserProfile(match.params.id);
   }, [getUserProfile]);
 
-  if (loading && profile === null) {
-    return <Spinner />;
+  if (profile === null) {
+    if (loading) {
+      return <Spinner />;
+    } else {
+      return <p>No Profile Found...</p>;
+    }
   }
-  if (!loading && profile === null) {
-    return (
-      <Fragment>
-        <p>No Profile added yet...</p>
-      </Fragment>
-    );
-  }
+
   return (
     <Fragment>
       <Link to="/profile" className="btn btn-light">

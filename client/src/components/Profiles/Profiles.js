@@ -9,7 +9,7 @@ const Profiles = ({ profile: { profiles, loading }, getAllProfiles }) => {
   useEffect(() => {
     getAllProfiles();
   }, [getAllProfiles]);
-  if (loading === true) {
+  if (loading === true || profiles.length === 0) {
     return <Spinner />;
   }
 

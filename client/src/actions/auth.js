@@ -90,11 +90,12 @@ export const login = (email, password) => {
   };
 };
 
-export const logout = () => {
+export const logout = history => {
   return dispatch => {
     dispatch({
       type: actionTypes.LOGOUT
     });
+    //history.push("/login");
     dispatch({
       type: actionTypes.ClEAR_PROFILE
     });
