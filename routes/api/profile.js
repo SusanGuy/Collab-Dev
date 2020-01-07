@@ -116,6 +116,9 @@ router.post(
 router.get("/", async (req, res) => {
   try {
     const profiles = await Profile.find().populate("user", ["name", "avatar"]);
+    if (profiles.length == 0) {
+      return res.status(400).send("No Profiles Found");
+    }
     res.send(profiles);
   } catch (error) {
     console.log(error.message);

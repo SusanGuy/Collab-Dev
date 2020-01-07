@@ -5,12 +5,30 @@ import { connect } from "react-redux";
 import { getAllProfiles } from "../../actions/profile";
 import ProfileItem from "./ProfileItem";
 
-const Profiles = ({ profile: { profiles, loading }, getAllProfiles }) => {
+const Profiles = ({
+  profile: { profiles, loading, error },
+  getAllProfiles
+}) => {
   useEffect(() => {
     getAllProfiles();
   }, [getAllProfiles]);
-  if (loading === true || profiles.length === 0) {
-    return <Spinner />;
+  if (profiles.length === 0) {
+    if (error && !loading) {
+      return (
+        <Fragment>
+          <h1 className="large text-primary">Developers</h1>
+          <p className="lead">
+            <i className="fab fa-connectdevelop"></i> Browse and connect with
+            developers
+          </p>
+          <div className="profiles">
+            <h4>No Profile found ...</h4>
+          </div>
+        </Fragment>
+      );
+    } else {
+      return <Spinner />;
+    }
   }
 
   return (
@@ -21,13 +39,9 @@ const Profiles = ({ profile: { profiles, loading }, getAllProfiles }) => {
         developers
       </p>
       <div className="profiles">
-        {profiles.length > 0 ? (
-          profiles.map(profile => {
-            return <ProfileItem key={profile._id} profile={profile} />;
-          })
-        ) : (
-          <h4> No Profiles Found... </h4>
-        )}
+        {profiles.map(profile => {
+          return <ProfileItem key={profile._id} profile={profile} />;
+        })}
       </div>
     </Fragment>
   );
