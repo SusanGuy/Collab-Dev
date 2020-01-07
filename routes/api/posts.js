@@ -1,7 +1,7 @@
 const express = require("express");
 const router = new express.Router();
-const User = require("../../modal/User");
-const Post = require("../../modal/Post");
+const User = require("../../modal/user");
+const Post = require("../../modal/post");
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
 

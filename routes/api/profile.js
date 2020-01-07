@@ -1,7 +1,7 @@
 const express = require("express");
 const router = new express.Router();
-const Profile = require("../../modal/Profile");
-const User = require("../../modal/User");
+const Profile = require("../../modal/profile");
+const User = require("../../modal/user");
 const auth = require("../../middleware/auth");
 const axios = require("axios");
 const config = require("config");
