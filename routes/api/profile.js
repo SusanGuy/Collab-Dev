@@ -2,6 +2,7 @@ const express = require("express");
 const router = new express.Router();
 const Profile = require("../../modal/profiles");
 const User = require("../../modal/user");
+const Post = require("../../modal/posts");
 const auth = require("../../middleware/auth");
 const axios = require("axios");
 const config = require("config");
@@ -151,6 +152,10 @@ router.delete("/", auth, async (req, res) => {
 
     await User.findByIdAndRemove({
       _id: req.user.id
+    });
+
+    await Post.remove({
+      user: req.user.id
     });
 
     res.send({

@@ -31,6 +31,11 @@ const Dashboard = ({
           <Link to="/create-profile" className="btn btn-primary my-1">
             Create Profile
           </Link>
+          <div className="my-2">
+            <button className="btn btn-danger" onClick={() => deleteProfile()}>
+              <i className="fas fa-user-minus" /> Delete My Account
+            </button>
+          </div>
         </Aux>
       );
     } else {
