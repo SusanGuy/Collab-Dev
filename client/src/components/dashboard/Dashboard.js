@@ -7,6 +7,7 @@ import Spinner from "../layout/Spinner";
 import DashboardActions from "./DashboardActions";
 import Experience from "./Experience";
 import Education from "./Education";
+import Aux from "../../Aux";
 
 const Dashboard = ({
   getProfile,
@@ -21,7 +22,7 @@ const Dashboard = ({
   if (profile === null) {
     if (error && !loading) {
       return (
-        <Fragment>
+        <Aux>
           <h1 className="large text-primary">Dashboard</h1>
           <p className="lead">
             <i className="fas fa-user"></i> Welcome {user && user.name}
@@ -30,7 +31,7 @@ const Dashboard = ({
           <Link to="/create-profile" className="btn btn-primary my-1">
             Create Profile
           </Link>
-        </Fragment>
+        </Aux>
       );
     } else {
       return <Spinner />;
@@ -38,7 +39,7 @@ const Dashboard = ({
   }
 
   return (
-    <Fragment>
+    <Aux>
       <h1 className="large text-primary">Dashboard</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Welcome {user && user.name}
@@ -51,7 +52,7 @@ const Dashboard = ({
           <i className="fas fa-user-minus" /> Delete My Account
         </button>
       </div>
-    </Fragment>
+    </Aux>
   );
 };
 

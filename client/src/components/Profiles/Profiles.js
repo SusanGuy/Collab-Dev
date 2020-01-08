@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAllProfiles } from "../../actions/profile";
 import ProfileItem from "./ProfileItem";
+import Aux from "../../Aux";
 
 const Profiles = ({
   profile: { profiles, loading, error },
@@ -15,7 +16,7 @@ const Profiles = ({
   if (profiles.length === 0) {
     if (error && !loading) {
       return (
-        <Fragment>
+        <Aux>
           <h1 className="large text-primary">Developers</h1>
           <p className="lead">
             <i className="fab fa-connectdevelop"></i> Browse and connect with
@@ -24,7 +25,7 @@ const Profiles = ({
           <div className="profiles">
             <h4>No Profile found ...</h4>
           </div>
-        </Fragment>
+        </Aux>
       );
     } else {
       return <Spinner />;
@@ -32,7 +33,7 @@ const Profiles = ({
   }
 
   return (
-    <Fragment>
+    <Aux>
       <h1 className="large text-primary">Developers</h1>
       <p className="lead">
         <i className="fab fa-connectdevelop"></i> Browse and connect with
@@ -43,7 +44,7 @@ const Profiles = ({
           return <ProfileItem key={profile._id} profile={profile} />;
         })}
       </div>
-    </Fragment>
+    </Aux>
   );
 };
 

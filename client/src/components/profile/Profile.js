@@ -9,6 +9,7 @@ import ProfileAbout from "./ProfileAbout";
 import ProfileExperience from "./ProfileExperience";
 import ProfileEducation from "./ProfileEducation";
 import { getUserProfile } from "../../actions/profile";
+import Aux from "../../Aux";
 
 const Profile = ({
   match,
@@ -24,14 +25,14 @@ const Profile = ({
   if (profile === null) {
     if (error) {
       return (
-        <Fragment>
+        <Aux>
           <p>No profile added yet ...</p>
           {loading === false && auth.user._id === location.id && (
             <Link to="/create-profile" className="btn btn-dark">
               Add Profile
             </Link>
           )}
-        </Fragment>
+        </Aux>
       );
     } else {
       return <Spinner />;
@@ -39,7 +40,7 @@ const Profile = ({
   }
 
   return (
-    <Fragment>
+    <Aux>
       <Link to="/profile" className="btn btn-light">
         Back To Profiles
       </Link>
@@ -101,7 +102,7 @@ const Profile = ({
           <ProfileGithub username={profile.githubusername} />
         )}
       </div>
-    </Fragment>
+    </Aux>
   );
 };
 
